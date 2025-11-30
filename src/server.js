@@ -1,12 +1,14 @@
-require('dotenv').config();
-const express = require('express');
-const router = require('./routes');
-
+require("dotenv").config();
+const express = require("express");
 const app = express();
-app.use(express.json());
-app.use('/', router);
+const githubRoutes = require("./routes/allRoutes");
 
-const PORT = Number(process.env.PORT || 3000);
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+
+app.use(express.urlencoded({ extended: true }));
+app.use("/", githubRoutes);
+
+app.listen(process.env.PORT, () =>
+  console.log(`Server running on port ${process.env.PORT}`)
+);

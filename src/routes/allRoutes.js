@@ -1,16 +1,8 @@
-const express = require('express');
-const {
-  status,
-  syncCommitsController,
-  listCommitsController,
-  listRepositoriesController
-} = require('./controllers/commitController');
-
+const express = require("express");
 const router = express.Router();
+const controller = require("../controllers/githubController");
 
-router.get('/', status);
-router.post('/sync-commits', syncCommitsController);
-router.get('/commits', listCommitsController);
-router.get('/repositories', listRepositoriesController);
+router.get("/", controller.home);
+router.get("/commits", controller.listCommits);
 
 module.exports = router;

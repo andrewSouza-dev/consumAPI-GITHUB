@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Commit {
+  id        Int      @id @default(autoincrement())
+  sha       String   @unique
+  message   String
+  author    String
+  date      DateTime
+  repo      String
+  createdAt DateTime @default(now())
+}

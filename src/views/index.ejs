@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub Commit History</title>
+</head>
+<body>
+  <h1>Consultar Commits</h1>
+
+  <form action="/commits" method="GET">
+    <label>Usuário:</label>
+    <input type="text" name="user" required />
+
+    <label>Repositório:</label>
+    <input type="text" name="repo" required />
+
+    <label>Autor (filtro opcional):</label>
+    <input type="text" name="author" />
+
+    <label>Por página:</label>
+    <input type="number" name="per_page" value="10" />
+
+    <button type="submit">Buscar</button>
+  </form>
+</body>
+</html>
