@@ -1,5 +1,5 @@
-const prisma = require("../database");
-const { fetchCommits } = require("../services/github.service");
+const { prisma } = require("../database");
+const { fetchCommits } = require("../services/githubService");
 
 module.exports = {
   async listCommits(req, res) {
@@ -55,6 +55,6 @@ module.exports = {
   },
 
   async home(req, res) {
-    res.render("index");
+    res.render("index", { title: "GitHub Commit History" });
   }
 };

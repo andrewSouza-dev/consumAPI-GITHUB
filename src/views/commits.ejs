@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Commits de <%= user %>/<%= repo %></title>
-</head>
-<body>
-  <h1>Commits de <%= user %>/<%= repo %></h1>
+   <%- include('partials/head', { title: `Commits de ${user}/${repo}` }) %>
 
-  <form method="GET" action="/commits">
-    <input type="hidden" name="user" value="<%= user %>">
-    <input type="hidden" name="repo" value="<%= repo %>">
-    <input type="text" name="author" placeholder="Filtrar autor" value="<%= author %>">
-    <button>Filtrar</button>
-  </form>
+  <body>
+    <h1>Commits de <%= user %>/<%= repo %></h1>
 
-  <ul>
-    <% commits.forEach(c => { %>
-      <li>
-        <b><%= c.author %></b> — <%= c.message %> <br />
-        <small><%= c.date.toISOString() %></small>
-      </li>
-    <% }) %>
-  </ul>
+    <form method="GET" action="/commits">
+      <input type="hidden" name="user" value="<%= user %>">
+      <input type="hidden" name="repo" value="<%= repo %>">
+      <input type="text" name="author" placeholder="Filtrar autor" value="<%= author %>">
+      <button>Filtrar</button>
+    </form>
 
-  <div>
-    <a href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page - 1 %>&per_page=<%= per_page %>"
-      <% if (page <= 1) { %> style="pointer-events:none;opacity:0.5" <% } %>
-    >Anterior</a>
+    <ul>
+      <% commits.forEach(c => { %>
+        <li>
+          <b><%= c.author %></b> — <%= c.message %> <br />
+          <small><%= c.date.toISOString() %></small>
+        </li>
+      <% }) %>
+    </ul>
 
-    <a href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page + 1 %>&per_page=<%= per_page %>">
-      Próxima
-    </a>
-  </div>
+    <div>
+      <a href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page - 1 %>&per_page=<%= per_page %>"
+        <% if (page <= 1) { %> style="pointer-events:none;opacity:0.5" <% } %>
+      >Anterior</a>
 
-</body>
+      <a href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page + 1 %>&per_page=<%= per_page %>">
+        Próxima
+      </a>
+    </div>
+  </body>
+  <%- include('./partials/footer') %>
+
 </html>

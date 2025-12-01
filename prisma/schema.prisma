@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -16,4 +15,11 @@ model Commit {
   date      DateTime
   repo      String
   createdAt DateTime @default(now())
+}
+
+model Repository {
+  id       Int    @id @default(autoincrement())
+  owner    String
+  name     String
+  fullName String @unique
 }
