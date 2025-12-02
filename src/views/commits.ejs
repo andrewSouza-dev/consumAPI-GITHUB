@@ -3,7 +3,14 @@
    <%- include('partials/head', { title: `Commits de ${user}/${repo}` }) %>
 
   <body>
+    <!-- Botão de voltar -->
+    <div class="voltar-container">
+      <a href="/" class="btn-voltar">← Voltar</a>
+    </div>
+    
     <h1>Commits de <%= user %>/<%= repo %></h1>
+
+    
 
     <form method="GET" action="/commits">
       <input type="hidden" name="user" value="<%= user %>">
@@ -31,6 +38,6 @@
       </a>
     </div>
   </body>
-  <%- include('./partials/footer') %>
+  <%- include('partials/footer') %>
 
 </html>
