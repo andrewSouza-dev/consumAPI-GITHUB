@@ -64,7 +64,7 @@ prisma/
 
 ---
 
-## Imagens
+## Imagens do Projeto 📸
 
 ![Tela de Inicio](src/public/images/home.png)
 
@@ -75,6 +75,14 @@ prisma/
 ---
 
 ![Página de Erros](src/public/images/erros.png)
+
+---
+
+![Tables](src/public/images/tables.png)
+
+---
+
+![Select](src/public/images/select.png)
 
 ---
 
