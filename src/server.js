@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const githubRoutes = require("./routes/allRoutes");
 const errorHandler = require("./middlewares/errorHandler");
 
@@ -10,6 +11,9 @@ app.set("views", __dirname + "/views");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
+
+// ✅ Habilitar CORS globalmente
+app.use(cors());
 
 app.use("/", githubRoutes);
 
