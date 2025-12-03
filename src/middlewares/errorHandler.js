@@ -7,12 +7,16 @@ function errorHandler(err, req, res, next) {
     return next(err);
   }
 
-  // Resposta genérica
-  res.status(err.status || 500);
-  res.render("errors/error", {
-    message: err.message || "Erro interno no servidor",
+  let message = err.message;
+
+  // esconder erros 500
+  if (err.status === 500) {
+    message = "Erro interno no servidor. Tente novamente mais tarde.";
+  }
+
+  res.status(err.status || 500).render("errors/error", {
+    message,
     status: err.status || 500
   });
 }
-
 module.exports = errorHandler;

@@ -1,23 +1,40 @@
+const httpError = require("../error/HttpError");
 const { prisma } = require("../database");
 const { fetchCommits } = require("../services/githubService");
 
-/**
- * Controller para listar commits
- */
+
+// HOME 
+async function home(req, res) {
+  res.render("index");
+}
+
+
+// LISTAR COMMITS
 async function listCommits(req, res, next) {
   try {
     const { user, repo, page = 1, per_page = 10, author } = req.query;
 
     if (!user || !repo) {
-      const error = new Error("Usuário ou repositório não encontrado!");
-      error.status = 404;
-      throw error;
+      return next(httpError(404, "Usuário ou repositório não encontrado!"));
     }
 
-    // Buscar commits da API
-    const commits = await fetchCommits(user, repo, page, per_page);
+    const pageNum = parseInt(page);
+    const perPageNum = parseInt(per_page);
 
-    // Persistir no banco (upsert evita duplicados)
+    const commits = await fetchCommits(user, repo, pageNum, perPageNum);
+
+    // Salva o repositório no banco se ainda não existir
+    await prisma.repository.upsert({
+      where: { fullName: `${user}/${repo}` },
+      update: {},
+      create: {
+        owner: user,
+        name: repo,
+        fullName: `${user}/${repo}`
+      }
+    });
+
+    // Salva commits no banco
     for (const c of commits) {
       await prisma.commit.upsert({
         where: { sha: c.sha },
@@ -32,37 +49,35 @@ async function listCommits(req, res, next) {
       });
     }
 
-    // Query com filtros
-    const query = {
-      where: {
-        repo: `${user}/${repo}`,
-        author: author ? { contains: author, mode: "insensitive" } : undefined
-      },
-      skip: (page - 1) * per_page,
-      take: parseInt(per_page),
-      orderBy: { date: "desc" }
+    const filters = {
+      repo: `${user}/${repo}`,
+      ...(author && {
+        author: { contains: author, mode: "insensitive" }
+      })
     };
 
-    const results = await prisma.commit.findMany(query);
+    const results = await prisma.commit.findMany({
+      where: filters,
+      skip: (pageNum - 1) * perPageNum,
+      take: perPageNum,
+      orderBy: { date: "desc" }
+    });
 
     res.render("commits", {
       commits: results,
-      page: +page,
-      per_page: +per_page,
+      page: pageNum,
+      per_page: perPageNum,
       user,
       repo,
       author: author || ""
     });
+
   } catch (err) {
-    next(err); // passa para o middleware de erro
+    next(err);
   }
 }
 
-/**
- * Controller para página inicial
- */
-function home(req, res) {
-  res.render("index", { title: "GitHub Commit History" });
-}
-
-module.exports = { listCommits, home };
+module.exports = {
+  home,
+  listCommits
+};

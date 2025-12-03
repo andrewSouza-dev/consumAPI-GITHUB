@@ -3,41 +3,58 @@
    <%- include('partials/head', { title: `Commits de ${user}/${repo}` }) %>
 
   <body>
-    <!-- Botão de voltar -->
-    <div class="voltar-container">
-      <a href="/" class="btn-voltar">← Voltar</a>
+
+  <!-- Fundo animado -->
+  <div class="bolhas">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Botão de voltar -->
+  <div class="voltar-container">
+    <a href="/" class="btn-voltar">← Voltar</a>
+  </div>
+
+  <!-- Card principal -->
+  <div class="centralizado">
+    <div class="card commits-card">
+
+      <h1>Commits de <%= user %>/<%= repo %></h1>
+
+      <!-- Filtro -->
+      <form method="GET" action="/commits" class="form-inline">
+        <input type="hidden" name="user" value="<%= user %>">
+        <input type="hidden" name="repo" value="<%= repo %>">
+
+        <input type="text" name="author" placeholder="Filtrar autor" value="<%= author %>" />
+        <button type="submit">Filtrar</button>
+      </form>
+
+      <!-- Lista dos commits -->
+      <ul class="lista-commits">
+        <% commits.forEach(c => { %>
+          <li class="commit-item">
+            <b><%= c.author %></b> — <%= c.message %><br />
+            <small><%= c.date.toISOString() %></small>
+          </li>
+        <% }) %>
+      </ul>
+
+      <!-- Paginação -->
+      <div class="paginacao">
+        <a class="btn-pagina" 
+           href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page - 1 %>&per_page=<%= per_page %>"
+           <% if (page <= 1) { %> style="pointer-events:none;opacity:0.4" <% } %>>
+           ← Anterior
+        </a>
+
+        <a class="btn-pagina"
+           href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page + 1 %>&per_page=<%= per_page %>">
+           Próxima →
+        </a>
+      </div>
+
     </div>
-    
-    <h1>Commits de <%= user %>/<%= repo %></h1>
-
-    
-
-    <form method="GET" action="/commits">
-      <input type="hidden" name="user" value="<%= user %>">
-      <input type="hidden" name="repo" value="<%= repo %>">
-      <input type="text" name="author" placeholder="Filtrar autor" value="<%= author %>">
-      <button>Filtrar</button>
-    </form>
-
-    <ul>
-      <% commits.forEach(c => { %>
-        <li>
-          <b><%= c.author %></b> — <%= c.message %> <br />
-          <small><%= c.date.toISOString() %></small>
-        </li>
-      <% }) %>
-    </ul>
-
-    <div>
-      <a href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page - 1 %>&per_page=<%= per_page %>"
-        <% if (page <= 1) { %> style="pointer-events:none;opacity:0.5" <% } %>
-      >Anterior</a>
-
-      <a href="?user=<%= user %>&repo=<%= repo %>&author=<%= author %>&page=<%= page + 1 %>&per_page=<%= per_page %>">
-        Próxima
-      </a>
-    </div>
-  </body>
+  </div>
   <%- include('partials/footer') %>
-
+</body>
 </html>

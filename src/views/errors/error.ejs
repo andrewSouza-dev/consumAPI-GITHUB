@@ -7,9 +7,23 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <h1>Ocorreu um erro</h1>
-  <p>Status: <%= status %></p>
-  <p><%= message %></p>
-  <a href="/">Voltar para a página inicial</a>
+
+  <!-- Fundo animado -->
+  <div class="bolhas">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="centralizado">
+    <div class="card commits-card">
+      <h1>Ocorreu um erro</h1>
+
+      <p><strong>Status:</strong> <%= status %></p>
+      <p><%= message %></p>
+
+      <a href="/" class="btn-voltar">Voltar para a página inicial</a>
+    </div>
+  </div>
+
+   <%- include('../partials/footer') %>
 </body>
 </html>

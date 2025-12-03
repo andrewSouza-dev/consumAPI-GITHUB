@@ -3,11 +3,15 @@
   <%- include('partials/head', { title: "GitHub Commit History" }) %>
 
 
-  <body>
+ <body>
+  <div class="bolhas">
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
 
+<div class="centralizado">
+  <div class="card">
     <h1>Consultar Commits</h1>
 
-  
     <form action="/commits" method="GET">
       <label>Usuário:</label>
       <input type="text" name="user" required />
@@ -23,7 +27,9 @@
 
       <button type="submit">Buscar</button>
     </form>
-  </body>
+  </div>
+</div>
   <%- include('partials/footer') %>
+</body>
 
 </html>
