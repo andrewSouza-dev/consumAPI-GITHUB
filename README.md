@@ -64,6 +64,20 @@ prisma/
 
 ---
 
+## Imagens
+
+![Tela de Inicio](src/public/images/home.png)
+
+---
+
+![Lista de Commits](src/public/images/commits.png)
+
+---
+
+![Página de Erros](src/public/images/erros.png)
+
+---
+
 ## ⚙️ Configuração e Execução
 
 1️⃣ Clonar o repositório
