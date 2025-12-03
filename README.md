@@ -66,21 +66,31 @@ prisma/
 
 ## Imagens do Projeto 📸
 
+### INICIO
+
 ![Tela de Inicio](src/public/images/home.png)
 
 ---
+
+### LISTA DE COMMITS
 
 ![Lista de Commits](src/public/images/commits.png)
 
 ---
 
+### PÁGINA DE ERROS
+
 ![Página de Erros](src/public/images/erros.png)
 
 ---
 
+### TABELAS NO BANCO
+
 ![Tables](src/public/images/tables.png)
 
 ---
+
+### SELECT DE COMMITS
 
 ![Select](src/public/images/select.png)
 
